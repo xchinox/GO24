@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://c26r08u766cxb"]
+
+[ext_resource type="Script" path="res://objects/LetterBoard/letter_board.gd" id="1_yfq80"]
+
+[node name="LetterBoard" type="Node3D"]
+script = ExtResource("1_yfq80")
+
+[node name="GridMap" type="GridMap" parent="."]
+cell_size = Vector3(1, 1, 1)
