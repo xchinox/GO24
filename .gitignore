@@ -8,3 +8,5 @@ export_presets.cfg
 
 assets/
 .env
+
+export/

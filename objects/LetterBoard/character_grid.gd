@@ -2,8 +2,8 @@ class_name CharacterGrid
 extends Object
 
 
-var WIDTH := 10
-var HEIGHT := 10
+var WIDTH := 15
+var HEIGHT := 15
 var abet: String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 var grid: Dictionary
 var thes: Thesaurus = Thesaurus.new()

@@ -1,9 +1,26 @@
-[gd_scene load_steps=2 format=3 uid="uid://c26r08u766cxb"]
+[gd_scene load_steps=3 format=3 uid="uid://c26r08u766cxb"]
 
 [ext_resource type="Script" path="res://objects/LetterBoard/letter_board.gd" id="1_yfq80"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y52aa"]
+albedo_color = Color(0, 0, 0, 1)
 
 [node name="LetterBoard" type="Node3D"]
 script = ExtResource("1_yfq80")
 
 [node name="GridMap" type="GridMap" parent="."]
 cell_size = Vector3(1, 1, 1)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.72883)
+size = Vector3(100, 100, 1)
+material = SubResource("StandardMaterial3D_y52aa")
+
+[node name="Button" type="Button" parent="."]
+offset_left = 520.0
+offset_top = 602.0
+offset_right = 583.0
+offset_bottom = 633.0
+text = "Shuffle"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
