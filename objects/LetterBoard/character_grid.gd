@@ -2,14 +2,15 @@ class_name CharacterGrid
 extends Object
 
 
-var WIDTH := 15
-var HEIGHT := 15
+var WIDTH := 13
+var HEIGHT := 13
 var abet: String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 var grid: Dictionary
 var thes: Thesaurus = Thesaurus.new()
 
+var active_words: Array[String]
 var protected_cells: Array[Vector2] = []
-var allowed_actions: Array[Thesaurus.ActionType] = [Thesaurus.ActionType.DEFEND, Thesaurus.ActionType.ATTACK, Thesaurus.ActionType.SPELL, Thesaurus.ActionType.HEAL]
+var allowed_actions: Array[Thesaurus.ActionType] = [Thesaurus.ActionType.DEFEND, Thesaurus.ActionType.ATTACK, Thesaurus.ActionType.SPELL, Thesaurus.ActionType.HEAL, Thesaurus.ActionType.SECRET]
 
 
 var valid_directions: Array[Direction] = []
@@ -34,10 +35,8 @@ func populate_random() -> void:
 	for x in range(0, WIDTH):
 		for y in range(0, HEIGHT):
 			grid.get_or_add(Vector2(x, y), abet[randi_range(0, abet.length() - 1)])
-
-	
-func place_action_words() -> void:
-	
+		
+func place_action_words() -> void:	
 	for action_type in allowed_actions: 
 		valid_directions.clear()
 		var word: String = thes.get_random_word_by_action(action_type)
@@ -47,8 +46,9 @@ func place_action_words() -> void:
 			var random_pos: Vector2 = Vector2(randi_range(0, WIDTH), randi_range(0, HEIGHT))
 			validate_word_placement(word, random_pos)
 			if valid_directions.size() > 0:
-				replace_chars(word, random_pos, directions[valid_directions.pick_random()] as Vector2)
-				print("PLACED: ", word, " AT ", random_pos )
+				replace_chars(word, random_pos, directions[valid_directions.pick_random()] as Vector2)		
+				print("PLACED ", word)		
+				active_words.append(word)
 			else:
 				print("ERROR COULD NOT PLACE: ", word)
 
@@ -71,7 +71,7 @@ func can_place(word: String, pos: Vector2, dir: Vector2) -> bool:
 		var current_pos: Vector2 = pos + (dir * i)		
 		if grid.has(current_pos) && !protected_cells.has(current_pos):
 			continue
-		else:
+		else:						
 			blocker = true
 			break
 	

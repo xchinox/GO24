@@ -6,7 +6,8 @@ enum ActionType {
 	ATTACK,
 	DEFEND,
 	SPELL,
-	HEAL
+	HEAL,
+	SECRET
 }
 
 
@@ -17,7 +18,9 @@ var action_words: Dictionary = {
 
 	ActionType.SPELL: ["CAST", "MAGIC", "GRIMOIRE", "INCANTATION"],
 
-	ActionType.HEAL: ["MEDIC", "CURE", "CURATIVE", "HEALING", "CARE"]
+	ActionType.HEAL: ["MEDIC", "CURE", "CURATIVE", "HEALING", "CARE"],
+
+	ActionType.SECRET: ["HIDDEN", "SECRET", "INCOGNITO", "CODE"]
 
 }
 

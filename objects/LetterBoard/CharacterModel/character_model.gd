@@ -3,8 +3,17 @@ extends Node3D
 
 
 var glyph: String = "A"
+var face: Node3D
+var mesh: MeshInstance3D
+
+var material: Material = Material.new()
+
+signal character_clicked
+signal mouse_entered
 
 
+@onready var area_scene: PackedScene = load("res://objects/LetterBoard/CharacterModel/character_area.tscn")
+var area: Area3D
 
 @onready var a: PackedScene = load("res://assets/models/characters/a.blend")
 @onready var b: PackedScene = load("res://assets/models/characters/b.blend")
@@ -63,8 +72,37 @@ var glyph: String = "A"
 	}
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var scene := scene_dict[glyph] as PackedScene
-	var face: Node3D = scene.instantiate()
-
-	add_child.call_deferred(face)
+	area = area_scene.instantiate()
+	add_child(area)
 	
+	area.input_event.connect(_on_input_event)
+	area.mouse_entered.connect(_on_mouse_entered)
+
+	var scene := scene_dict[glyph] as PackedScene
+	face = scene.instantiate()		
+	add_child.call_deferred(face)
+	mesh = face.get_node("Text")
+	mesh.set_surface_override_material(0, get_material(false))	
+
+
+func _on_input_event(camera: Camera3D, event: InputEvent, event_position: Vector3, normal: Vector3, shape_idx: int) -> void:
+	if event is InputEventMouseButton:		
+		character_clicked.emit(self, event)
+		
+
+func _on_mouse_entered() -> void:
+	mouse_entered.emit(self)
+
+
+func toggle_emit(switch: bool) -> void:
+	var smat: StandardMaterial3D = mesh.get_active_material(0)
+	smat.emission_enabled = switch
+	mesh.set_surface_override_material(0, smat)
+	
+
+func get_material(emit: bool) -> StandardMaterial3D:
+	var smat := StandardMaterial3D.new()
+	smat.albedo_color = Color.WHITE
+	smat.emission_enabled = emit
+	smat.emission = Color.GHOST_WHITE
+	return smat

@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://c26r08u766cxb" path="res://objects/LetterBoard/letter_board.tscn" id="1_idnn3"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_gcasl"]
+sky_top_color = Color(0.238653, 0.35685, 0.981766, 1)
 
 [sub_resource type="Sky" id="Sky_dfgxv"]
 sky_material = SubResource("ProceduralSkyMaterial_gcasl")
@@ -10,17 +11,19 @@ sky_material = SubResource("ProceduralSkyMaterial_gcasl")
 [sub_resource type="Environment" id="Environment_dqsep"]
 background_mode = 2
 sky = SubResource("Sky_dfgxv")
+ambient_light_source = 2
+ambient_light_color = Color(5.53504e-07, 0.40935, 0.411241, 1)
+glow_enabled = true
+glow_intensity = 1.0
+glow_hdr_luminance_cap = 17.39
 
 [node name="Battlefield" type="Node3D"]
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.40414, -1.16316, 3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.26423, -1.16316, 2.28306)
 
 [node name="LetterBoard" parent="." instance=ExtResource("1_idnn3")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_dqsep")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.2633, 21.5408)

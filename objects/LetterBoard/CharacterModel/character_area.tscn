@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://b372b532d5dob"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_arruw"]
+
+[node name="CharacterArea" type="Area3D"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.25, 0.25, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_arruw")
