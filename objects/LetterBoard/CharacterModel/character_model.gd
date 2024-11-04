@@ -102,7 +102,7 @@ func toggle_emit(switch: bool) -> void:
 
 func get_material(emit: bool) -> StandardMaterial3D:
 	var smat := StandardMaterial3D.new()
-	smat.albedo_color = Color.WHITE
+	
 	smat.emission_enabled = emit
-	smat.emission = Color.GHOST_WHITE
+	smat.emission = Color.LIGHT_CYAN
 	return smat

@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://dx7d7xoys6foc"]
+[gd_scene load_steps=6 format=3 uid="uid://dx7d7xoys6foc"]
 
 [ext_resource type="PackedScene" uid="uid://c26r08u766cxb" path="res://objects/LetterBoard/letter_board.tscn" id="1_idnn3"]
+[ext_resource type="PackedScene" uid="uid://df6pnveqtab16" path="res://objects/ShotClock/shot_clock.tscn" id="2_77h5k"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_gcasl"]
 sky_top_color = Color(0.238653, 0.35685, 0.981766, 1)
@@ -20,10 +21,19 @@ glow_hdr_luminance_cap = 17.39
 [node name="Battlefield" type="Node3D"]
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.26423, -1.16316, 2.28306)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.26423, -1.42799, 2.72527)
 
 [node name="LetterBoard" parent="." instance=ExtResource("1_idnn3")]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0.0280672)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_dqsep")
+
+[node name="ShotClock" parent="." instance=ExtResource("2_77h5k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.21044, -0.452405, 1.24151)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.9995, 151.88)
+light_color = Color(0.472681, 0.788646, 0, 1)
+light_energy = 0.1
+light_indirect_energy = 0.677

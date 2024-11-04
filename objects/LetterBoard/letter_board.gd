@@ -7,6 +7,9 @@ var state: InputState
 
 var selection: Array[CharacterModel]
 var selection_letters: Array[String]
+var selection_direction: Array[Vector3] = []
+var last_selected: Vector3
+
 var char_grid: CharacterGrid = CharacterGrid.new()
 func _ready() -> void:
 	create_grid()
@@ -35,15 +38,15 @@ func _on_character_clicked(cm: CharacterModel, event: InputEventMouseButton) -> 
 		change_state(InputState.SELECT)				
 		selection_letters.append(cm.glyph)
 		selection.append(cm)
+		selection_direction.append(cm.position)
 		cm.toggle_emit(true)
 
 func change_state(target_state: InputState) -> void:
 	match target_state:
 		InputState.IDLE: 
 			if state == InputState.SELECT:
-				evaluate_selection()
-				print(selection)					
-				print(selection_letters)			
+				evaluate_selection()	
+				selection_direction.clear()			
 				state = InputState.IDLE
 
 		InputState.SELECT:
@@ -51,9 +54,24 @@ func change_state(target_state: InputState) -> void:
 
 func _on_character_mouse_entered(cm: CharacterModel) -> void:
 	if state == InputState.SELECT:
-		selection.append(cm)
-		selection_letters.append(cm.glyph)		
-		cm.toggle_emit(true)
+		if selection_direction.size() < 2:
+			#Check that we are adjacent to origin
+			var diff: Vector3 = abs(cm.position - selection_direction[0])
+			if diff.x <= 1 && diff.y <=1:
+				selection_direction.append(cm.position)  #Add our second vector to determine allowed direction
+				selection.append(cm)
+				selection_letters.append(cm.glyph)		
+				cm.toggle_emit(true)
+				last_selected = cm.position
+						
+		else:
+			var dir: Vector3 = selection_direction[1] - selection_direction[0]
+			var moved: Vector3 = cm.position - last_selected
+			if dir == moved:				
+				last_selected = cm.position
+				selection.append(cm)
+				selection_letters.append(cm.glyph)		
+				cm.toggle_emit(true)
 
 
 func evaluate_selection() -> void:
