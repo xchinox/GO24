@@ -1,0 +1,53 @@
+[gd_scene load_steps=8 format=3 uid="uid://tsi1e4l3in4m"]
+
+[ext_resource type="Script" path="res://objects/HintLabels/hint_labels.gd" id="1_h2t4k"]
+[ext_resource type="FontFile" uid="uid://cisfnuylmk502" path="res://assets/fonts/Pixel_NES.otf" id="1_tg7lo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ar4pi"]
+emission = Color(1, 1, 1, 1)
+
+[sub_resource type="TextMesh" id="TextMesh_phpan"]
+material = SubResource("StandardMaterial3D_ar4pi")
+text = "TANK"
+font = ExtResource("1_tg7lo")
+horizontal_alignment = 0
+depth = 0.01
+
+[sub_resource type="TextMesh" id="TextMesh_pr723"]
+material = SubResource("StandardMaterial3D_ar4pi")
+text = "Melee"
+font = ExtResource("1_tg7lo")
+horizontal_alignment = 0
+depth = 0.01
+
+[sub_resource type="TextMesh" id="TextMesh_xfwj7"]
+material = SubResource("StandardMaterial3D_ar4pi")
+text = "CASTER"
+font = ExtResource("1_tg7lo")
+horizontal_alignment = 0
+depth = 0.01
+
+[sub_resource type="TextMesh" id="TextMesh_37miw"]
+material = SubResource("StandardMaterial3D_ar4pi")
+text = "HEALER"
+font = ExtResource("1_tg7lo")
+horizontal_alignment = 0
+depth = 0.01
+
+[node name="HintLabels" type="Node3D"]
+script = ExtResource("1_h2t4k")
+
+[node name="TankWord" type="MeshInstance3D" parent="."]
+mesh = SubResource("TextMesh_phpan")
+
+[node name="MeleeWord" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.649719, 0)
+mesh = SubResource("TextMesh_pr723")
+
+[node name="CasterWord" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.39405, 0)
+mesh = SubResource("TextMesh_xfwj7")
+
+[node name="HealerWord" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.11983, 0)
+mesh = SubResource("TextMesh_37miw")

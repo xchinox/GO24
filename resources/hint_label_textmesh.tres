@@ -1,0 +1,12 @@
+[gd_resource type="TextMesh" load_steps=3 format=3 uid="uid://cmyfjlk4nan2y"]
+
+[ext_resource type="FontFile" uid="uid://cisfnuylmk502" path="res://assets/fonts/Pixel_NES.otf" id="1_mkga7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ar4pi"]
+
+[resource]
+material = SubResource("StandardMaterial3D_ar4pi")
+text = "HEALER"
+font = ExtResource("1_mkga7")
+horizontal_alignment = 0
+depth = 0.01

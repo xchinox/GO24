@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://bwsw72wbpdkyb"]
+
+[ext_resource type="Script" path="res://objects/Enemy/enemies/ground_skeleton.gd" id="1_c2vt7"]
+[ext_resource type="PackedScene" uid="uid://da7ac6soixcdc" path="res://assets/models/ground_skeleton.blend" id="1_cktr5"]
+[ext_resource type="PackedScene" uid="uid://dhvfd64xwly0e" path="res://assets/models/bone_projectile.blend" id="3_nbfkt"]
+
+[node name="GroundSkeleton" type="Node3D"]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, -4.56886, -2.72957, 0)
+script = ExtResource("1_c2vt7")
+
+[node name="ground_skeleton" parent="." instance=ExtResource("1_cktr5")]
+
+[node name="bone_projectile" parent="." instance=ExtResource("3_nbfkt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.45982, 23.9181, 0.0807196)
+visible = false

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://0gn6ysb5vls5"]
+
+[ext_resource type="Script" path="res://objects/EnemyParty/enemy_party.gd" id="1_2sjjc"]
+
+[node name="EnemyParty" type="Node3D"]
+transform = Transform3D(-0.25, 0, -2.18557e-08, 0, 0.25, 0, 2.18557e-08, 0, -0.25, 7.93599, 0, 0)
+script = ExtResource("1_2sjjc")

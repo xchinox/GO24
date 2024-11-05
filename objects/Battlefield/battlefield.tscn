@@ -1,24 +1,35 @@
-[gd_scene load_steps=6 format=3 uid="uid://dx7d7xoys6foc"]
+[gd_scene load_steps=10 format=3 uid="uid://dx7d7xoys6foc"]
 
+[ext_resource type="Script" path="res://objects/Battlefield/battlefield.gd" id="1_4kwh4"]
 [ext_resource type="PackedScene" uid="uid://c26r08u766cxb" path="res://objects/LetterBoard/letter_board.tscn" id="1_idnn3"]
 [ext_resource type="PackedScene" uid="uid://df6pnveqtab16" path="res://objects/ShotClock/shot_clock.tscn" id="2_77h5k"]
+[ext_resource type="PackedScene" uid="uid://tsi1e4l3in4m" path="res://objects/HintLabels/hint_labels.tscn" id="5_72qph"]
+[ext_resource type="PackedScene" uid="uid://1kh2p20r365v" path="res://objects/Party/party.tscn" id="6_2cd01"]
+[ext_resource type="PackedScene" uid="uid://0gn6ysb5vls5" path="res://objects/EnemyParty/enemy_party.tscn" id="6_4s47s"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_gcasl"]
-sky_top_color = Color(0.238653, 0.35685, 0.981766, 1)
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_irrg2"]
 
 [sub_resource type="Sky" id="Sky_dfgxv"]
-sky_material = SubResource("ProceduralSkyMaterial_gcasl")
+sky_material = SubResource("PanoramaSkyMaterial_irrg2")
 
 [sub_resource type="Environment" id="Environment_dqsep"]
 background_mode = 2
 sky = SubResource("Sky_dfgxv")
-ambient_light_source = 2
-ambient_light_color = Color(5.53504e-07, 0.40935, 0.411241, 1)
+ambient_light_source = 3
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_sky_contribution = 0.55
+ambient_light_energy = 0.65
+reflected_light_source = 1
 glow_enabled = true
-glow_intensity = 1.0
-glow_hdr_luminance_cap = 17.39
+glow_intensity = 0.0
+glow_bloom = 0.28
+glow_hdr_threshold = 0.1
+glow_hdr_scale = 0.0
+glow_hdr_luminance_cap = 0.0
+volumetric_fog_enabled = true
 
 [node name="Battlefield" type="Node3D"]
+script = ExtResource("1_4kwh4")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.26423, -1.42799, 2.72527)
@@ -32,8 +43,11 @@ environment = SubResource("Environment_dqsep")
 [node name="ShotClock" parent="." instance=ExtResource("2_77h5k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.21044, -0.452405, 1.24151)
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.9995, 151.88)
-light_color = Color(0.472681, 0.788646, 0, 1)
-light_energy = 0.1
-light_indirect_energy = 0.677
+[node name="HintLabels" parent="." instance=ExtResource("5_72qph")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.88232, -0.040509, -1.51393)
+
+[node name="Party" parent="." instance=ExtResource("6_2cd01")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.03515, 3.06641, -4.54958)
+
+[node name="EnemyParty" parent="." instance=ExtResource("6_4s47s")]
+transform = Transform3D(-0.25, 0, -2.18557e-08, 0, 0.25, 0, 2.18557e-08, 0, -0.25, 6.55881, 0, -2.41088)

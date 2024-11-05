@@ -1,8 +1,15 @@
+class_name LetterBoard
 extends Node3D
 
 
-enum InputState { IDLE, SELECT}
-var state: InputState 
+signal melee_action
+signal tank_action
+signal healer_action
+signal ranged_action
+signal secret_action
+
+enum InputState {IDLE, SELECT, DISABLED}
+var state: InputState
 
 
 var selection: Array[CharacterModel]
@@ -16,7 +23,7 @@ func _ready() -> void:
 
 func create_grid() -> void:
 	clear_grid()
-	char_grid = CharacterGrid.new()	
+	char_grid = CharacterGrid.new()
 	for pos: Vector2 in char_grid.grid.keys():
 		var cm: CharacterModel = CharacterModel.new()
 		cm.glyph = char_grid.grid[pos]
@@ -35,7 +42,7 @@ func _on_button_pressed() -> void:
 
 func _on_character_clicked(cm: CharacterModel, event: InputEventMouseButton) -> void:
 	if state != InputState.SELECT && event.button_mask == 1:
-		change_state(InputState.SELECT)				
+		change_state(InputState.SELECT)
 		selection_letters.append(cm.glyph)
 		selection.append(cm)
 		selection_direction.append(cm.position)
@@ -43,10 +50,10 @@ func _on_character_clicked(cm: CharacterModel, event: InputEventMouseButton) -> 
 
 func change_state(target_state: InputState) -> void:
 	match target_state:
-		InputState.IDLE: 
+		InputState.IDLE:
 			if state == InputState.SELECT:
-				evaluate_selection()	
-				selection_direction.clear()			
+				evaluate_selection()
+				selection_direction.clear()
 				state = InputState.IDLE
 
 		InputState.SELECT:
@@ -57,20 +64,20 @@ func _on_character_mouse_entered(cm: CharacterModel) -> void:
 		if selection_direction.size() < 2:
 			#Check that we are adjacent to origin
 			var diff: Vector3 = abs(cm.position - selection_direction[0])
-			if diff.x <= 1 && diff.y <=1:
-				selection_direction.append(cm.position)  #Add our second vector to determine allowed direction
+			if diff.x <= 1 && diff.y <= 1:
+				selection_direction.append(cm.position) # Add our second vector to determine allowed direction
 				selection.append(cm)
-				selection_letters.append(cm.glyph)		
+				selection_letters.append(cm.glyph)
 				cm.toggle_emit(true)
 				last_selected = cm.position
 						
 		else:
 			var dir: Vector3 = selection_direction[1] - selection_direction[0]
 			var moved: Vector3 = cm.position - last_selected
-			if dir == moved:				
+			if dir == moved:
 				last_selected = cm.position
 				selection.append(cm)
-				selection_letters.append(cm.glyph)		
+				selection_letters.append(cm.glyph)
 				cm.toggle_emit(true)
 
 
@@ -79,7 +86,8 @@ func evaluate_selection() -> void:
 	for letter in selection_letters:
 		word += letter
 	if word in char_grid.active_words:
-		print("GOOD CHOICE")		
+		var word_role: Thesaurus.ActionType = char_grid.thes.get_role_by_word(word)
+		emit_signal_by_role(word_role)
 	else:
 		for item in selection:
 			item.toggle_emit(false)
@@ -89,6 +97,18 @@ func evaluate_selection() -> void:
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		var mevent := event as InputEventMouseButton
-		if mevent.button_mask == 0: #Mouse button let go
+		if mevent.button_mask == 0: # Mouse button let go
 			change_state(InputState.IDLE)
 		
+func emit_signal_by_role(type: Thesaurus.ActionType) -> void:	
+	match type:
+		Thesaurus.ActionType.ATTACK:
+			melee_action.emit()
+		Thesaurus.ActionType.DEFEND:
+			tank_action.emit()
+		Thesaurus.ActionType.HEAL:
+			healer_action.emit()
+		Thesaurus.ActionType.SPELL:
+			ranged_action.emit()
+		Thesaurus.ActionType.SECRET:
+			secret_action.emit()

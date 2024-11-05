@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://1kh2p20r365v"]
+
+[ext_resource type="Script" path="res://objects/Party/party.gd" id="1_2t18f"]
+[ext_resource type="PackedScene" uid="uid://bwt1sv05lm6t4" path="res://objects/PlayerUnit/tank.tscn" id="2_fq6av"]
+[ext_resource type="PackedScene" uid="uid://cnadqc14cox7x" path="res://objects/PlayerUnit/brigand.tscn" id="3_e1b6c"]
+
+[node name="Party" type="Node3D"]
+script = ExtResource("1_2t18f")
+
+[node name="Tank" parent="." instance=ExtResource("2_fq6av")]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, -2.27503, -1.58088, 0)
+
+[node name="Brigand" parent="." instance=ExtResource("3_e1b6c")]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, -2.27503, -3.74337, 0)

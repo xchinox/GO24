@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cnadqc14cox7x"]
+
+[ext_resource type="Script" path="res://objects/PlayerUnit/brigand.gd" id="1_hlq38"]
+[ext_resource type="PackedScene" uid="uid://ce6e5k4478lpb" path="res://assets/models/brigand.blend" id="2_75c7l"]
+
+[node name="Brigand" type="Node3D"]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+script = ExtResource("1_hlq38")
+
+[node name="brigand" parent="." instance=ExtResource("2_75c7l")]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)

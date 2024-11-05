@@ -71,7 +71,7 @@ func can_place(word: String, pos: Vector2, dir: Vector2) -> bool:
 		var current_pos: Vector2 = pos + (dir * i)		
 		if grid.has(current_pos) && !protected_cells.has(current_pos):
 			continue
-		else:						
+		else:					
 			blocker = true
 			break
 	

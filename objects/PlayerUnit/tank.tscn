@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bwt1sv05lm6t4"]
+
+[ext_resource type="Script" path="res://objects/PlayerUnit/tank.gd" id="1_3j50w"]
+[ext_resource type="PackedScene" uid="uid://ck5ujwoomhiyy" path="res://assets/models/red_knight.blend" id="1_ftdio"]
+
+[node name="Tank" type="Node3D"]
+script = ExtResource("1_3j50w")
+
+[node name="Model" parent="." instance=ExtResource("1_ftdio")]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)

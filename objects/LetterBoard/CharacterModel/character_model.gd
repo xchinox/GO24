@@ -104,5 +104,5 @@ func get_material(emit: bool) -> StandardMaterial3D:
 	var smat := StandardMaterial3D.new()
 	
 	smat.emission_enabled = emit
-	smat.emission = Color.LIGHT_CYAN
+	smat.emission = Color.BURLYWOOD
 	return smat
