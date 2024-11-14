@@ -13,10 +13,13 @@ extends Node3D
 @onready var healer_label: MeshInstance3D = get_node("HealerWord")
 @onready var healer_text: TextMesh = healer_label.mesh
 # Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+
+
+
+func clear() -> void:
+	tank_text.text = ""
+	melee_text.text = ""
+	caster_text.text = ""
+	healer_text.text = ""

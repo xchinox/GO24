@@ -1,21 +1,26 @@
 class_name CharacterGrid
 extends Object
 
+enum Direction {UP, DOWN, LEFT, RIGHT, UP_RIGHT, DOWN_RIGHT, UP_LEFT, DOWN_LEFT}
+
+#An active word
+class ActiveWord:
+	var word: String
+	var action_type: Thesaurus.ActionType
+
+	func _init(_word: String, _type: Thesaurus.ActionType) -> void:
+		word = _word
+		action_type = _type
 
 var WIDTH := 13
 var HEIGHT := 13
 var abet: String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 var grid: Dictionary
 var thes: Thesaurus = Thesaurus.new()
-
-var active_words: Array[String]
+var active_words: Array[ActiveWord]
 var protected_cells: Array[Vector2] = []
-var allowed_actions: Array[Thesaurus.ActionType] = [Thesaurus.ActionType.DEFEND, Thesaurus.ActionType.ATTACK, Thesaurus.ActionType.SPELL, Thesaurus.ActionType.HEAL, Thesaurus.ActionType.SECRET]
-
-
 var valid_directions: Array[Direction] = []
-
-enum Direction {UP, DOWN, LEFT, RIGHT, UP_RIGHT, DOWN_RIGHT, UP_LEFT, DOWN_LEFT}
+var allowed_actions: Array[Thesaurus.ActionType] = [Thesaurus.ActionType.DEFEND, Thesaurus.ActionType.ATTACK, Thesaurus.ActionType.SPELL, Thesaurus.ActionType.HEAL, Thesaurus.ActionType.SECRET]
 var directions: Dictionary = {
 	Direction.UP: Vector2(0, -1),
 	Direction.DOWN: Vector2(0, 1),
@@ -27,9 +32,11 @@ var directions: Dictionary = {
 	Direction.DOWN_RIGHT: Vector2(1, 1)
 }
 
-func _init() -> void:
+
+func initialize() -> void:
 	populate_random()
 	place_action_words()
+
 
 func populate_random() -> void:
 	for x in range(0, WIDTH):
@@ -45,10 +52,11 @@ func place_action_words() -> void:
 			tries += 1
 			var random_pos: Vector2 = Vector2(randi_range(0, WIDTH), randi_range(0, HEIGHT))
 			validate_word_placement(word, random_pos)
-			if valid_directions.size() > 0:
+			if valid_directions.size() > 0:				
 				replace_chars(word, random_pos, directions[valid_directions.pick_random()] as Vector2)		
-				print("PLACED ", word)		
-				active_words.append(word)
+				print("PLACED ", word, " FOR ACTION TYPE: ", action_type)		
+				var active_word: ActiveWord = ActiveWord.new(word, action_type)
+				active_words.append(active_word)
 			else:
 				print("ERROR COULD NOT PLACE: ", word)
 

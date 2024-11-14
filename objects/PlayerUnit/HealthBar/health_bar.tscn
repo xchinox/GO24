@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://dgorbqkdmwdb1"]
+
+[ext_resource type="Script" path="res://objects/PlayerUnit/HealthBar/health_bar.gd" id="1_e1p51"]
+[ext_resource type="FontFile" uid="uid://cisfnuylmk502" path="res://assets/fonts/Pixel_NES.otf" id="2_7fonk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j3y8m"]
+shading_mode = 0
+
+[sub_resource type="TextMesh" id="TextMesh_kgid0"]
+material = SubResource("StandardMaterial3D_j3y8m")
+text = "0000/11111"
+font = ExtResource("2_7fonk")
+font_size = 64
+
+[node name="HealthBar" type="Node3D"]
+script = ExtResource("1_e1p51")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.76105, -0.190451, 0)
+mesh = SubResource("TextMesh_kgid0")

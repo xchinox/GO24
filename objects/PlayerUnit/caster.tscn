@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://5cugj1xdhiom"]
+
+[ext_resource type="Script" path="res://objects/PlayerUnit/caster.gd" id="1_ldvyk"]
+[ext_resource type="PackedScene" uid="uid://bvdjwhu1h8gon" path="res://assets/models/brown_wizard.blend" id="2_31cx5"]
+
+[node name="RangedCaster" type="Node3D"]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+script = ExtResource("1_ldvyk")
+
+[node name="Model" parent="." instance=ExtResource("2_31cx5")]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)

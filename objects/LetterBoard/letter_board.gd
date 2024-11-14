@@ -5,7 +5,7 @@ extends Node3D
 signal melee_action
 signal tank_action
 signal healer_action
-signal ranged_action
+signal caster_action
 signal secret_action
 
 enum InputState {IDLE, SELECT, DISABLED}
@@ -16,14 +16,18 @@ var selection: Array[CharacterModel]
 var selection_letters: Array[String]
 var selection_direction: Array[Vector3] = []
 var last_selected: Vector3
-
+var allowed_actions: Array[Thesaurus.ActionType] = [Thesaurus.ActionType.DEFEND, Thesaurus.ActionType.ATTACK, Thesaurus.ActionType.SPELL, Thesaurus.ActionType.HEAL, Thesaurus.ActionType.SECRET]
 var char_grid: CharacterGrid = CharacterGrid.new()
+
 func _ready() -> void:
 	create_grid()
 
 func create_grid() -> void:
 	clear_grid()
-	char_grid = CharacterGrid.new()
+	char_grid = CharacterGrid.new()	
+	char_grid.allowed_actions = allowed_actions
+	char_grid.initialize()
+
 	for pos: Vector2 in char_grid.grid.keys():
 		var cm: CharacterModel = CharacterModel.new()
 		cm.glyph = char_grid.grid[pos]
@@ -41,6 +45,8 @@ func _on_button_pressed() -> void:
 	create_grid()
 
 func _on_character_clicked(cm: CharacterModel, event: InputEventMouseButton) -> void:
+	if state == InputState.DISABLED:
+		return
 	if state != InputState.SELECT && event.button_mask == 1:
 		change_state(InputState.SELECT)
 		selection_letters.append(cm.glyph)
@@ -48,16 +54,6 @@ func _on_character_clicked(cm: CharacterModel, event: InputEventMouseButton) -> 
 		selection_direction.append(cm.position)
 		cm.toggle_emit(true)
 
-func change_state(target_state: InputState) -> void:
-	match target_state:
-		InputState.IDLE:
-			if state == InputState.SELECT:
-				evaluate_selection()
-				selection_direction.clear()
-				state = InputState.IDLE
-
-		InputState.SELECT:
-			state = InputState.SELECT
 
 func _on_character_mouse_entered(cm: CharacterModel) -> void:
 	if state == InputState.SELECT:
@@ -71,7 +67,7 @@ func _on_character_mouse_entered(cm: CharacterModel) -> void:
 				cm.toggle_emit(true)
 				last_selected = cm.position
 						
-		else:
+		else: #at this point we should have two vectors to determine a direction to lock into
 			var dir: Vector3 = selection_direction[1] - selection_direction[0]
 			var moved: Vector3 = cm.position - last_selected
 			if dir == moved:
@@ -82,15 +78,19 @@ func _on_character_mouse_entered(cm: CharacterModel) -> void:
 
 
 func evaluate_selection() -> void:
-	var word: String = ""
+	var selected_word: String = ""
 	for letter in selection_letters:
-		word += letter
-	if word in char_grid.active_words:
-		var word_role: Thesaurus.ActionType = char_grid.thes.get_role_by_word(word)
-		emit_signal_by_role(word_role)
-	else:
-		for item in selection:
+		selected_word += letter
+	
+	var found: bool = false
+	for active_word: CharacterGrid.ActiveWord in char_grid.active_words:
+		if active_word.word == selected_word:
+			emit_signal_by_role(active_word.action_type)
+			found = true
+	if !found:
+		for item in selection:#Turn off the selection glow for specified character
 			item.toggle_emit(false)
+
 	selection_letters.clear()
 	selection.clear()
 
@@ -109,6 +109,23 @@ func emit_signal_by_role(type: Thesaurus.ActionType) -> void:
 		Thesaurus.ActionType.HEAL:
 			healer_action.emit()
 		Thesaurus.ActionType.SPELL:
-			ranged_action.emit()
+			caster_action.emit()
 		Thesaurus.ActionType.SECRET:
 			secret_action.emit()
+
+func change_state(target_state: InputState) -> void:
+	match target_state:
+		InputState.IDLE:
+			if state == InputState.SELECT:
+				evaluate_selection()
+				selection_direction.clear()
+				state = InputState.IDLE
+
+			if state == InputState.DISABLED:
+				state = InputState.IDLE
+
+		InputState.SELECT:
+			state = InputState.SELECT
+
+		InputState.DISABLED:			
+			state = InputState.DISABLED

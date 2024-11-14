@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://cgainautt3tgp"]
+
+[ext_resource type="FontFile" uid="uid://cisfnuylmk502" path="res://assets/fonts/Pixel_NES.otf" id="1_i5iq0"]
+
+[node name="VictoryFanfare" type="Node3D"]
+
+[node name="Label3D" type="Label3D" parent="."]
+text = "VICTORY!"
+font = ExtResource("1_i5iq0")
+font_size = 128

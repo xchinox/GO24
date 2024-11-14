@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://bq4b0v3hofdib"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gwvx3"]
+lifetime_randomness = 0.15
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+gravity = Vector3(0, 1, 0)
+tangential_accel_min = -2.23517e-06
+tangential_accel_max = 0.999998
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1jn0j"]
+albedo_color = Color(0.0588235, 1, 0, 1)
+emission_enabled = true
+emission = Color(2.25252e-05, 0.97857, 1.54018e-06, 1)
+ao_enabled = true
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_7to4f"]
+material = SubResource("StandardMaterial3D_1jn0j")
+radius = 0.025
+height = 0.1
+
+[sub_resource type="Skin" id="Skin_lals2"]
+
+[node name="GPUParticles3D" type="GPUParticles3D"]
+emitting = false
+amount = 24
+lifetime = 2.0
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_gwvx3")
+draw_pass_1 = SubResource("CapsuleMesh_7to4f")
+draw_skin = SubResource("Skin_lals2")

@@ -36,7 +36,13 @@ func format_float(time: float) -> String:
 	return formatted_time
 
 func _on_round_timer_timeout() -> void:
-	print("TIMEOUT")
+	round_timout.emit()
 
 func _on_crit_window_timeout() -> void:
 	crit_window_timeout.emit()
+
+func reset() -> void:
+	round_timer.wait_time = remaining_duration	
+	crit_window.wait_time = GameVal.crit_window_duration
+	round_timer.start()
+	crit_window.start()

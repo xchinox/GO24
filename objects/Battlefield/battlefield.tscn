@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dx7d7xoys6foc"]
+[gd_scene load_steps=11 format=3 uid="uid://dx7d7xoys6foc"]
 
 [ext_resource type="Script" path="res://objects/Battlefield/battlefield.gd" id="1_4kwh4"]
 [ext_resource type="PackedScene" uid="uid://c26r08u766cxb" path="res://objects/LetterBoard/letter_board.tscn" id="1_idnn3"]
@@ -6,27 +6,25 @@
 [ext_resource type="PackedScene" uid="uid://tsi1e4l3in4m" path="res://objects/HintLabels/hint_labels.tscn" id="5_72qph"]
 [ext_resource type="PackedScene" uid="uid://1kh2p20r365v" path="res://objects/Party/party.tscn" id="6_2cd01"]
 [ext_resource type="PackedScene" uid="uid://0gn6ysb5vls5" path="res://objects/EnemyParty/enemy_party.tscn" id="6_4s47s"]
+[ext_resource type="PackedScene" uid="uid://cgainautt3tgp" path="res://objects/VictoryFanfare/victory_fanfare.tscn" id="7_2r7sf"]
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_irrg2"]
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_epgyq"]
 
-[sub_resource type="Sky" id="Sky_dfgxv"]
-sky_material = SubResource("PanoramaSkyMaterial_irrg2")
+[sub_resource type="Sky" id="Sky_1gda3"]
+sky_material = SubResource("ProceduralSkyMaterial_epgyq")
 
 [sub_resource type="Environment" id="Environment_dqsep"]
-background_mode = 2
-sky = SubResource("Sky_dfgxv")
+background_mode = 1
+sky = SubResource("Sky_1gda3")
 ambient_light_source = 3
 ambient_light_color = Color(1, 1, 1, 1)
-ambient_light_sky_contribution = 0.55
-ambient_light_energy = 0.65
 reflected_light_source = 1
 glow_enabled = true
 glow_intensity = 0.0
 glow_bloom = 0.28
-glow_hdr_threshold = 0.1
+glow_hdr_threshold = 0.0
 glow_hdr_scale = 0.0
 glow_hdr_luminance_cap = 0.0
-volumetric_fog_enabled = true
 
 [node name="Battlefield" type="Node3D"]
 script = ExtResource("1_4kwh4")
@@ -51,3 +49,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.03515, 3.06641, -4.54958)
 
 [node name="EnemyParty" parent="." instance=ExtResource("6_4s47s")]
 transform = Transform3D(-0.25, 0, -2.18557e-08, 0, 0.25, 0, 2.18557e-08, 0, -0.25, 6.55881, 0, -2.41088)
+
+[node name="EndTurnButton" type="Button" parent="."]
+offset_left = 600.0
+offset_top = 640.0
+offset_right = 678.0
+offset_bottom = 671.0
+text = "End Turn"
+
+[node name="VictoryFanfare" parent="." instance=ExtResource("7_2r7sf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.41255, -1.09585, 0.887408)
+visible = false
+
+[connection signal="pressed" from="EndTurnButton" to="." method="_on_end_turn_button_pressed"]

@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bsuoivkb8q2ts"]
+
+[ext_resource type="Script" path="res://objects/PlayerUnit/healer.gd" id="1_irqef"]
+[ext_resource type="PackedScene" uid="uid://dfok4d0ft27aj" path="res://assets/models/white_wizard.blend" id="2_14gvx"]
+
+[node name="WhiteWizard" type="Node3D"]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+script = ExtResource("1_irqef")
+
+[node name="Model" parent="." instance=ExtResource("2_14gvx")]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
