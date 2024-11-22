@@ -85,7 +85,7 @@ func _ready() -> void:
 	mesh.set_surface_override_material(0, get_material(false))	
 
 
-func _on_input_event(camera: Camera3D, event: InputEvent, event_position: Vector3, normal: Vector3, shape_idx: int) -> void:
+func _on_input_event(_camera: Camera3D, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
 	if event is InputEventMouseButton:		
 		character_clicked.emit(self, event)
 		

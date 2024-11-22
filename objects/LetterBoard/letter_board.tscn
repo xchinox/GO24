@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://c26r08u766cxb"]
+[gd_scene load_steps=4 format=3 uid="uid://c26r08u766cxb"]
 
 [ext_resource type="Script" path="res://objects/LetterBoard/letter_board.gd" id="1_yfq80"]
+[ext_resource type="AudioStream" uid="uid://cc6lqptubx78" path="res://assets/sound/sfx/drop.ogg" id="2_8f72g"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y52aa"]
 albedo_color = Color(0, 0.236386, 0.14635, 1)
@@ -13,5 +14,10 @@ cell_size = Vector3(1, 1, 1)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 506.533, -271.354, -334.164)
+visible = false
 size = Vector3(2004.83, 1072.63, 1)
 material = SubResource("StandardMaterial3D_y52aa")
+
+[node name="SelectionAudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_8f72g")
+max_polyphony = 16

@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://drwtkeifd5g"]
+
+[ext_resource type="FontFile" uid="uid://cisfnuylmk502" path="res://assets/fonts/Pixel_NES.otf" id="1_asc6x"]
+
+[node name="DefeatFanfare" type="Node3D"]
+
+[node name="Label3D" type="Label3D" parent="."]
+modulate = Color(1, 0, 0, 1)
+text = "DEFEATED."
+font = ExtResource("1_asc6x")
+font_size = 128

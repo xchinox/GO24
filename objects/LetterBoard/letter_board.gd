@@ -18,8 +18,11 @@ var selection_direction: Array[Vector3] = []
 var last_selected: Vector3
 var allowed_actions: Array[Thesaurus.ActionType] = [Thesaurus.ActionType.DEFEND, Thesaurus.ActionType.ATTACK, Thesaurus.ActionType.SPELL, Thesaurus.ActionType.HEAL, Thesaurus.ActionType.SECRET]
 var char_grid: CharacterGrid = CharacterGrid.new()
+var char_model_grid: Dictionary
+@onready var aplayer: AudioStreamPlayer = get_node("SelectionAudioStreamPlayer")
 
 func _ready() -> void:
+	CheatManager.cheat_request_highlight.connect(highlight_protected_cells)
 	create_grid()
 
 func create_grid() -> void:
@@ -34,6 +37,7 @@ func create_grid() -> void:
 		cm.position = Vector3(pos.x, pos.y * -1, 0)
 		cm.character_clicked.connect(_on_character_clicked)
 		cm.mouse_entered.connect(_on_character_mouse_entered)
+		char_model_grid[pos] = cm
 		add_child(cm)
 
 func clear_grid() -> void:
@@ -51,12 +55,12 @@ func _on_character_clicked(cm: CharacterModel, event: InputEventMouseButton) -> 
 		change_state(InputState.SELECT)
 		selection_letters.append(cm.glyph)
 		selection.append(cm)
-		selection_direction.append(cm.position)
-		cm.toggle_emit(true)
-
+		selection_direction.append(cm.position)		
+		cm.toggle_emit(true)		
+		pitch_sound()
 
 func _on_character_mouse_entered(cm: CharacterModel) -> void:
-	if state == InputState.SELECT:
+	if state == InputState.SELECT:		
 		if selection_direction.size() < 2:
 			#Check that we are adjacent to origin
 			var diff: Vector3 = abs(cm.position - selection_direction[0])
@@ -66,6 +70,7 @@ func _on_character_mouse_entered(cm: CharacterModel) -> void:
 				selection_letters.append(cm.glyph)
 				cm.toggle_emit(true)
 				last_selected = cm.position
+				pitch_sound()
 						
 		else: #at this point we should have two vectors to determine a direction to lock into
 			var dir: Vector3 = selection_direction[1] - selection_direction[0]
@@ -75,6 +80,7 @@ func _on_character_mouse_entered(cm: CharacterModel) -> void:
 				selection.append(cm)
 				selection_letters.append(cm.glyph)
 				cm.toggle_emit(true)
+				pitch_sound()
 
 
 func evaluate_selection() -> void:
@@ -88,9 +94,12 @@ func evaluate_selection() -> void:
 			emit_signal_by_role(active_word.action_type)
 			found = true
 	if !found:
+		NoiseManager.play_sfx("Error")
 		for item in selection:#Turn off the selection glow for specified character
-			item.toggle_emit(false)
-
+			if is_instance_valid(item):
+				item.toggle_emit(false)
+	else:
+		pass
 	selection_letters.clear()
 	selection.clear()
 
@@ -119,6 +128,7 @@ func change_state(target_state: InputState) -> void:
 			if state == InputState.SELECT:
 				evaluate_selection()
 				selection_direction.clear()
+				aplayer.pitch_scale = 1.0
 				state = InputState.IDLE
 
 			if state == InputState.DISABLED:
@@ -129,3 +139,18 @@ func change_state(target_state: InputState) -> void:
 
 		InputState.DISABLED:			
 			state = InputState.DISABLED
+
+func pitch_sound() -> void:
+	print("PITCH", selection_letters.size() * .1)
+	aplayer.pitch_scale += selection_letters.size() * .1
+	aplayer.play()
+
+func highlight_protected_cells() -> void:
+	for cell in char_grid.protected_cells:
+		var cm: CharacterModel = char_model_grid[cell]
+		cm.toggle_emit(true)
+		
+	await get_tree().create_timer(3).timeout
+	for cell in char_grid.protected_cells:
+		var cm: CharacterModel = char_model_grid[cell]
+		cm.toggle_emit(false)

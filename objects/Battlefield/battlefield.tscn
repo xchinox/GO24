@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dx7d7xoys6foc"]
+[gd_scene load_steps=12 format=3 uid="uid://dx7d7xoys6foc"]
 
 [ext_resource type="Script" path="res://objects/Battlefield/battlefield.gd" id="1_4kwh4"]
 [ext_resource type="PackedScene" uid="uid://c26r08u766cxb" path="res://objects/LetterBoard/letter_board.tscn" id="1_idnn3"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://1kh2p20r365v" path="res://objects/Party/party.tscn" id="6_2cd01"]
 [ext_resource type="PackedScene" uid="uid://0gn6ysb5vls5" path="res://objects/EnemyParty/enemy_party.tscn" id="6_4s47s"]
 [ext_resource type="PackedScene" uid="uid://cgainautt3tgp" path="res://objects/VictoryFanfare/victory_fanfare.tscn" id="7_2r7sf"]
+[ext_resource type="PackedScene" uid="uid://drwtkeifd5g" path="res://objects/DefeatFanfare/defeat_fanfare.tscn" id="8_u4qxv"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_epgyq"]
 
@@ -60,5 +61,12 @@ text = "End Turn"
 [node name="VictoryFanfare" parent="." instance=ExtResource("7_2r7sf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.41255, -1.09585, 0.887408)
 visible = false
+
+[node name="DefeatFanfare" parent="." instance=ExtResource("8_u4qxv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.51443, -1.10262, 0.999039)
+visible = false
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.162654, 0.986683, 0, -0.986683, 0.162654, -2.17389, 34.7724, 7.36199)
 
 [connection signal="pressed" from="EndTurnButton" to="." method="_on_end_turn_button_pressed"]

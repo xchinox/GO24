@@ -10,6 +10,7 @@ extends Node3D
 @onready var members: Array = [tank, melee, healer, caster]
 
 signal unit_died
+signal defeated
 
 func _ready() -> void:
 	tank.unit_died.connect(_on_unit_died)
@@ -30,6 +31,8 @@ func caster_action(enemy_party: EnemyParty) -> void:
 	caster.execute_action(self, enemy_party)
 	
 func _on_unit_died(unit: PlayerUnit) -> void:
-	members.erase(unit)	
+	members.erase(unit)		
 	unit.queue_free()
 	unit_died.emit(unit.role)
+	if members.size() == 0:
+		defeated.emit()

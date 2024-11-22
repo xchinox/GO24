@@ -8,6 +8,7 @@ extends Node3D
 @onready var party: Party = get_node("Party")
 @onready var enemy_party: EnemyParty = get_node("EnemyParty")
 @onready var victory: Node3D = get_node("VictoryFanfare")
+@onready var defeat_fanfare: Node3D = get_node("DefeatFanfare")
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	shotclock.crit_window_timeout.connect(_on_crit_window_timeout)
@@ -19,6 +20,7 @@ func _ready() -> void:
 	enemy_party.turn_complete.connect(_on_enemy_turn_complete)
 	enemy_party.defeated.connect(_on_enemy_party_defeated)
 	party.unit_died.connect(_on_unit_died)
+	party.defeated.connect(_on_party_defeated)
 	begin_round()
 	
 func _on_crit_window_timeout() -> void:
@@ -80,8 +82,7 @@ func _on_unit_died(unit: PlayerUnit.Role) -> void:
 func begin_round() -> void:
 	set_words()
 
-func _on_enemy_party_defeated() -> void:
-	print("Winner")
+func _on_enemy_party_defeated() -> void:	
 	button.text = "Continue"
 	button.pressed.disconnect(_on_end_turn_button_pressed)
 	button.pressed.connect(_on_continue_button_pressed)
@@ -90,3 +91,10 @@ func _on_enemy_party_defeated() -> void:
 
 func _on_continue_button_pressed() -> void:
 	print("Continue")
+
+func _on_party_defeated() -> void:
+	button.text = "Retreat"
+	button.pressed.disconnect(_on_end_turn_button_pressed)
+	button.pressed.connect(_on_continue_button_pressed)
+	defeat_fanfare.visible = true
+	shotclock.round_timer.paused = true

@@ -32,8 +32,8 @@ func throw(_name: String) -> void:
 	tween.finished.connect(Callable(reset_projectile).bind(target))
 
 
-func reset_projectile(target: PlayerUnit) -> void:
+func reset_projectile(_target: PlayerUnit) -> void:
 	projectile.position = projectile_origin
 	projectile.visible = false
-	target.take_hit(50, self)
+	_target.take_hit(50, self)
 	signal_action_complete()

@@ -20,3 +20,7 @@ transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, -2.12107, -5.74565, 
 
 [node name="Caster" parent="." instance=ExtResource("5_lwuv5")]
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, -2.09947, -7.91434, 0)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.2386, 2.86345)
+omni_range = 10.2

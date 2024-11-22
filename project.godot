@@ -18,6 +18,8 @@ config/icon="res://icon.svg"
 [autoload]
 
 GameVal="*res://scripts/game_val.gd"
+NoiseManager="*res://scripts/noise_manager.gd"
+CheatManager="*res://scripts/cheat_manager.gd"
 
 [debug]
 

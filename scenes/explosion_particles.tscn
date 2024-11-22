@@ -1,0 +1,56 @@
+[gd_scene load_steps=9 format=3 uid="uid://d3qmuld7adwh3"]
+
+[sub_resource type="Gradient" id="Gradient_korrj"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.254545, 0.918182)
+colors = PackedColorArray(0.10748, 0.10748, 0.10748, 1, 0.842574, 0.231652, 0, 1, 1, 0.583682, 0.471479, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1xfn4"]
+gradient = SubResource("Gradient_korrj")
+
+[sub_resource type="CurveTexture" id="CurveTexture_3eghl"]
+
+[sub_resource type="Curve" id="Curve_x13f0"]
+_data = [Vector2(0.0144928, 0), 0.0, 0.0, 0, 0, Vector2(0.601449, 0.89011), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_wekwx"]
+curve = SubResource("Curve_x13f0")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mlaq0"]
+lifetime_randomness = 1.0
+emission_shape = 2
+emission_sphere_radius = 1.0
+inherit_velocity_ratio = 0.04
+gravity = Vector3(0, 0, 0)
+attractor_interaction_enabled = false
+scale_min = 0.1
+scale_curve = SubResource("CurveTexture_wekwx")
+color_ramp = SubResource("GradientTexture1D_1xfn4")
+emission_curve = SubResource("CurveTexture_3eghl")
+turbulence_enabled = true
+turbulence_noise_strength = 4.6
+turbulence_noise_scale = 10.0
+turbulence_noise_speed = Vector3(2.89, 0, 0)
+turbulence_influence_max = 0.142
+
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_ve3p5"]
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.631602, 0.481246, 3.85046e-07, 1)
+emission_enabled = true
+emission = Color(0.72549, 0.137255, 0, 1)
+emission_energy_multiplier = 1.38
+grow_amount = 1.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_bwnd1"]
+material = SubResource("ORMMaterial3D_ve3p5")
+
+[node name="Explosion" type="GPUParticles3D"]
+emitting = false
+amount = 54
+lifetime = 1.56
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_mlaq0")
+draw_pass_1 = SubResource("SphereMesh_bwnd1")

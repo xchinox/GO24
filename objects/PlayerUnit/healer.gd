@@ -21,7 +21,7 @@ func execute_action(party: Party, enemy_party: EnemyParty) -> void:
 			if member.health < target.health:
 				target = member
 		
-	print("Whitest Mage")
+	
 	anim_player.play("rod_spin")
 	var hparticle: GPUParticles3D = hparticle_scene.instantiate()
 	
@@ -29,8 +29,9 @@ func execute_action(party: Party, enemy_party: EnemyParty) -> void:
 	hparticle.global_position = target.global_position + Vector3(.5, 0, 0)
 	hparticle.emitting = true	
 	hparticle.finished.connect(hparticle.queue_free)
-	target.health += 15
-
+	
+	target.health += GameVal.heal_amount
+	NoiseManager.play_sfx("VoxChord")
 	
 	
 

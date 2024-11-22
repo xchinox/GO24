@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://dc0n2qkxvp6w5"]
+
+[ext_resource type="PackedScene" uid="uid://blmhuawtpm01l" path="res://assets/models/rat.blend" id="1_pkpvq"]
+[ext_resource type="Script" path="res://objects/Enemy/enemies/rat.gd" id="1_ygc2q"]
+
+[node name="Rat" type="Node3D"]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, -4.49651, 0, 0)
+script = ExtResource("1_ygc2q")
+
+[node name="rat" parent="." instance=ExtResource("1_pkpvq")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 31.2742, -6.54499, 1.49084)

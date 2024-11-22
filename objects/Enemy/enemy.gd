@@ -39,3 +39,15 @@ func update_health_bar() -> void:
 		hp_bar.current_hp = health
 		hp_bar.total_hp = max_health		
 		hp_bar.set_text()
+
+func is_high_health() -> bool:
+	if int(health / max_health) * 100 > 80:
+		return true
+	else:
+		return false
+
+func is_low_health() -> bool:
+	if int(health / max_health) * 100 < 20:
+		return true
+	else:
+		return false
