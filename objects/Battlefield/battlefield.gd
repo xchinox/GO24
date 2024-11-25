@@ -9,6 +9,8 @@ extends Node3D
 @onready var enemy_party: EnemyParty = get_node("EnemyParty")
 @onready var victory: Node3D = get_node("VictoryFanfare")
 @onready var defeat_fanfare: Node3D = get_node("DefeatFanfare")
+@onready var secret_handler: SecretWordHandler = get_node("SecretWordHandler")
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	shotclock.crit_window_timeout.connect(_on_crit_window_timeout)
@@ -17,6 +19,7 @@ func _ready() -> void:
 	letterboard.melee_action.connect(_on_melee_action)
 	letterboard.healer_action.connect(_on_healer_action)
 	letterboard.caster_action.connect(_on_caster_action)
+	letterboard.secret_action.connect(_on_secret_action)
 	enemy_party.turn_complete.connect(_on_enemy_turn_complete)
 	enemy_party.defeated.connect(_on_enemy_party_defeated)
 	party.unit_died.connect(_on_unit_died)
@@ -60,6 +63,9 @@ func _on_healer_action() -> void:
 
 func _on_caster_action() -> void:
 	party.caster_action(enemy_party)
+
+func _on_secret_action() -> void:
+	secret_handler.execute_action(party, enemy_party, shotclock)
 
 func _on_enemy_turn_complete() -> void:
 	shotclock.reset()

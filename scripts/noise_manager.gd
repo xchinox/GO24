@@ -12,7 +12,7 @@ var sfx_paths: Dictionary = {
 	"VoxChord" : load("res://assets/sound/sfx/vox_chord.ogg"),
 	"ImpactMining" : load("res://assets/sound/sfx/impactMining_002.ogg"),
 	"Squeak" : load("res://assets/sound/sfx/squeak_and_tear.ogg"),
-	
+	"Tick" : load("res://assets/sound/sfx/tick.ogg")
 }
 
 var sfx_streams: Dictionary

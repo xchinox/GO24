@@ -1,3 +1,4 @@
+@tool
 class_name LetterBoard
 extends Node3D
 

@@ -46,6 +46,7 @@ grow_amount = 1.0
 material = SubResource("ORMMaterial3D_ve3p5")
 
 [node name="Explosion" type="GPUParticles3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.30185, 0, 0)
 emitting = false
 amount = 54
 lifetime = 1.56
